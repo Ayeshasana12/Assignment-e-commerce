@@ -7,7 +7,7 @@ import AllProduct from "./components/products/AllProduct";
 function App() {
   return (
     <div>
-      <HeaderSection />
+    
      <AllProduct />
     </div>
   );

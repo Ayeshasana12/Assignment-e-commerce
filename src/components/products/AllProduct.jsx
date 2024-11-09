@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  CircularProgress,
   Divider,
   Grid,
   Snackbar,
@@ -13,16 +14,21 @@ import {
 import React, { useEffect, useState } from "react";
 import "./AllProduct.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
+import Visibility from '@mui/icons-material/Visibility';
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AllProduct() {
   const [cartList, setCartList] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
   const [products, setProducts] = useState([]);
-  console.log(products, "products");
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+
+  console.log(isLoading, "isLoading");
+
 
   const cartHandler = (product) => {
     const isExist = cartList.find((cart) => cart.id === product.id);
@@ -52,9 +58,15 @@ function AllProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
+        setIsLoading(true)
         const products = await axios.get("https://fakestoreapi.com/products");
 
-        setProducts(products?.data)
+        if (products.status === 200) {
+          setIsLoading(false);
+          setProducts(products?.data);
+        } else {
+          setIsLoading(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -86,38 +98,50 @@ function AllProduct() {
           }
         />
       </Snackbar>
-      <Grid container
-        className="container mt-5">
-        {products.map((product) => (
+      {isLoading ? (
+        <Box className="text-center mt-5">
+          <CircularProgress color="inherit" />
+        </Box>
+      ) : <Grid container className="container mt-5">
+        {products?.map((product) => (
           <Grid item xs={12} md={3} mb={2}>
-            {/*  sx={{minHeight:"250px", maxHeight: "350px", border:"1px solid red"}} */}
             <Card key={product.id} sx={{ padding: "20px", width: "250px" }}>
               <Box>
                 <Box className="text-center">
-                  <img 
-                  style={{maxHeight: "140px", minHeight: "140px"}}
-                  className="product-img " width={100}
+                  <img
+                    style={{ maxHeight: "140px", minHeight: "140px" }}
+                    className="product-img " width={100}
                     src={product.image} alt={product.name} />
                 </Box>
                 <Tooltip title={product?.title} placement="top">
-                <Typography className="mt-3 fw-semibold" variant="body1">
-                  {product?.title?.length 
-                  >= 22 ? `${product?.title?.slice(0, 18)}...` 
-                  : product?.title}
-                </Typography>
+                  <Typography className="mt-3 fw-semibold" variant="body1">
+                    {product?.title?.length
+                      >= 22 ? `${product?.title?.slice(0, 18)}...`
+                      : product?.title}
+                  </Typography>
                 </Tooltip>
                 <Divider className="mt-2" sx={{ borderColor: "#333" }} variant="fullWidth" />
                 <Box className="d-flex justify-content-between mt-2">
-                  <ShareIcon />
-                  <FavoriteIcon />
-                  <AddShoppingCartIcon onClick={() => cartHandler(product)} />
+                  <Tooltip title="product details">
+                    <Visibility on onClick={()=>{
+                      navigate(`/product-details/${product?.id}`)
+                    
+                      }} />
+                  </Tooltip >
+                  <Tooltip title="Add To Favorite">
+                    <FavoriteIcon />
+                  </Tooltip>
+                  <Tooltip title="Add To Cart">
+                    <AddShoppingCartIcon onClick={() => cartHandler(product)} />
+                  </Tooltip>
                 </Box>
               </Box>
             </Card>
           </Grid>
         )
         )};
-      </Grid>
+
+      </Grid>}
     </>
   );
 }
