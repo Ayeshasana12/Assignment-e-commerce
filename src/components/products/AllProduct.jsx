@@ -102,10 +102,11 @@ function AllProduct() {
         <Box className="text-center mt-5">
           <CircularProgress color="inherit" />
         </Box>
-      ) : <Grid container className="container mt-5">
+      ) : <Grid container className="container mt-5 ">
         {products?.map((product) => (
           <Grid item xs={12} md={3} mb={2}>
-            <Card key={product.id} sx={{ padding: "20px", width: "250px" }}>
+            <Card className=" shadow" key={product.id} sx={{ padding: "20px ", 
+              width: "250px", border: "1px solid #0AAD0A"  }}>
               <Box>
                 <Box className="text-center">
                   <img
@@ -120,19 +121,18 @@ function AllProduct() {
                       : product?.title}
                   </Typography>
                 </Tooltip>
-                <Divider className="mt-2" sx={{ borderColor: "#333" }} variant="fullWidth" />
+                <Divider className="mt-2 " sx={{ borderColor: "#0AAD0A" }}
+                 variant="fullWidth" />
                 <Box className="d-flex justify-content-between mt-2">
                   <Tooltip title="product details">
-                    <Visibility on onClick={()=>{
-                      navigate(`/product-details/${product?.id}`)
-                    
-                      }} />
+                    <Visibility sx={{color: "#0AAD0A"}} on onClick={()=>{
+                      navigate(`/product-details/${product?.id}`)}} />
                   </Tooltip >
                   <Tooltip title="Add To Favorite">
-                    <FavoriteIcon />
+                    <FavoriteIcon sx={{color: "#0AAD0A"}} />
                   </Tooltip>
                   <Tooltip title="Add To Cart">
-                    <AddShoppingCartIcon onClick={() => cartHandler(product)} />
+                    <AddShoppingCartIcon sx={{color: "#0AAD0A"}} onClick={() => cartHandler(product)} />
                   </Tooltip>
                 </Box>
               </Box>

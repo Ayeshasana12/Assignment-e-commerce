@@ -1,0 +1,8 @@
+.product-img:hover {
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.text-color:hover{
+    color: #0AAD0A;
+}
