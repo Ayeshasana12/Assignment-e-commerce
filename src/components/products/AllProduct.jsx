@@ -1,13 +1,11 @@
 import {
   Box,
-  Button,
   Card,
   CircularProgress,
   Divider,
   Grid,
   Snackbar,
-  SnackbarContent,
-  TextField,
+  SnackbarContent, 
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -77,9 +75,7 @@ function AllProduct() {
 
   return (
     <>
-      <Box className="container mt-3">
-        <TextField onChange={searchHandler} size="small" placeholder="Search Items..." />
-      </Box>
+  
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={openAlert}
@@ -111,7 +107,7 @@ function AllProduct() {
                 <Box className="text-center">
                   <img
                     style={{ maxHeight: "140px", minHeight: "140px" }}
-                    className="product-img " width={100}
+                    className="product-img products" width={100}
                     src={product.image} alt={product.name} />
                 </Box>
                 <Tooltip title={product?.title} placement="top">

@@ -45,19 +45,18 @@ const ProductsDetails = () => {
             {
               <Box className='mt-2' >
                 <img style={{border: "1px solid #0AAD0A", cursor: "pointer"}}
-                 className=' p-5 rounded-4 shadow product-img mt-5'
+                 className=' p-5 rounded-4 shadow products mt-5'
                 width={"320px"} height={"360px"} src={productsDetails?.image} alt="" />
               </Box>
             }
           </Grid>
           <Grid item md={6} className='text-center mt-5 ' >
             <Typography style={{cursor: "pointer"}} variant='h3'
-            
             className='fw-semibold' sx={{color: "#0AAD0A"}}>
               {productsDetails?.category}</Typography>
               <Typography style={{cursor: "pointer"}} variant='h5'
                className='pt-2 fw-semibold text-color'>
-                <span className='mx-3'>Price</span>
+                <span className='mx-3'>Price:</span>
               {productsDetails?.price}</Typography>
             <Typography style={{cursor: "pointer"}} variant='h5'
              className='pt-3 fw-semibold text-color'>
